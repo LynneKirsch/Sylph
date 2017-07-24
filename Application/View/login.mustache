@@ -1,0 +1,22 @@
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col l12">
+            {{^logged_in}}
+                <form method="POST" action="{{basepath}}login/process_login">
+                    <label for="user_name">User Name:</label>
+                    <input id="user_name" type="text" name="username">
+                    <label for="password">Password:</label>
+                    <input id="password" type="password" name="password">
+                    <button class="btn">Login</button>
+                    <div class="red-text">
+                        {{#login_error}}{{login_error}}{{/login_error}}
+                    </div>
+                </form>
+            {{/logged_in}}
+            {{#logged_in}}
+                You are logged in as {{username}}, do you want to <a href="{{basepath}}logout">logout</a>?
+            {{/logged_in}}
+        </div>
+    </div>
+</div>
