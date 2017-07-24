@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/housing.iml" filepath="$PROJECT_DIR$/.idea/housing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Sylph.iml" filepath="$PROJECT_DIR$/.idea/Sylph.iml" />
+      <module fileurl="file://C:\xampp\htdocs\Sylph\.idea\housing.iml" filepath="C:\xampp\htdocs\Sylph\.idea\housing.iml" />
     </modules>
   </component>
 </project>

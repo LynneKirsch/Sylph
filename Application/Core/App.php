@@ -23,7 +23,7 @@ class App
         $this->setSession(new \Symfony\Component\HttpFoundation\Session\Session());
         $this->getSession()->start();
         $this->setRequest(Request::createFromGlobals());
-        $this->setEm(EntityManager::create(DB_SETUP, Setup::createAnnotationMetadataConfiguration(MODEL_PATH)));
+        $this->setEm(EntityManager::create(DB_SETUP, Setup::createAnnotationMetadataConfiguration([MODEL_PATH])));
 
         $this->setM(
             new \Mustache_Engine(array(
@@ -43,7 +43,7 @@ class App
             $called = new $route['class']($this);
 
             /* Find associated model if there is one */
-            $called_basename = str_replace("Controller", "", $called);
+            $called_basename = str_replace("Controller", "", get_class($called));
 
             if(file_exists(MODEL_PAGE.$called_basename.".php")) {
                 $called->setModel($called_basename);

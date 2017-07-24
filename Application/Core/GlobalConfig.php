@@ -5,7 +5,7 @@ const DB_PASSWORD = "";
 const DB_NAME = "exodus";
 
 // INCLUDE TRAILING SLASH
-const BASEPATH = "/housing/";
+const BASEPATH = "/Sylph/";
 
 // CONTROLLER CONFIG
 const CONTROLLER_PATH = "Application/Controller/";
