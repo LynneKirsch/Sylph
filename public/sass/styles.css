@@ -6797,7 +6797,8 @@ body {
   flex-direction: column; }
 
 .container.main {
-  flex: 1 0 auto; }
+  flex: 1 0 auto;
+  margin-top: 10px; }
 
 .block {
   display: block;

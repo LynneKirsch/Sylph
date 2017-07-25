@@ -15,12 +15,12 @@ class MigrationController extends BaseController
         $dir = new \DirectoryIterator(MODEL_PATH);
         foreach ($dir as $file_info) {
             if (!$file_info->isDot()) {
-                $models[] = $this->em()->getClassMetadata(MODEL_NS . $file_info->getBasename('.php'));
+                $models[] = $this->app()->em()->getClassMetadata(MODEL_NS . $file_info->getBasename('.php'));
             }
         }
 
-        $em = $this->em();
-        $tool = new SchemaTool($this->em());
+        $em = $this->app()->em();
+        $tool = new SchemaTool($this->app()->em());
         $to_schema = $tool->getSchemaFromMetadata($models);
         $connection = $em->getConnection();
         $sm = $connection->getSchemaManager();
@@ -34,7 +34,7 @@ class MigrationController extends BaseController
     {
         $sql = $this->generateSQL();
         if($sql) {
-            $stmt = $this->em()->getConnection()->prepare(implode(";\n", $sql));
+            $stmt = $this->app()->em()->getConnection()->prepare(implode(";\n", $sql));
             $result = $stmt->execute();
 
             if($result) {

@@ -1,0 +1,25 @@
+<div class="container main">
+    <div class="row">
+        <div class="col l12">
+            <a class="btn" href="{{global.basepath}}page/{{data.getSlug}}">View</a>
+            <a class="btn" onclick="savePage()">Save</a> &nbsp; <span id="saved_ts" class="green-text"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l12">
+            <form id="page_main_form" action="{{global.basepath}}admin/page/save/{{data.getPageId}}">
+                <strong>Page Name</strong>
+                <input class="block" name="title" title="Page Title" type="text" value="{{data.getTitle}}">
+                <br>
+                <strong>Slug</strong>
+                <input class="block" name="slug" title="Page Slug" type="text" value="{{data.getSlug}}">
+                <br>
+                <input type="hidden" name="page_id" title="page_id" value="{{data.getPageId}}">
+            </form>
+            <strong>Content</strong>
+            <textarea name="content" title="content">
+                {{data.getContent}}
+            </textarea>
+        </div>
+    </div>
+</div>

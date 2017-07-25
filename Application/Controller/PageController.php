@@ -4,6 +4,7 @@ namespace Application\Controller;
 
 use Application\Core\BaseController;
 use Application\Model\Page;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PageController extends BaseController
 {
@@ -17,27 +18,40 @@ class PageController extends BaseController
         }
     }
 
+    public function edit($id)
+    {
+        $page = $this->model()->findOneBy(["page_id" => $id]);
+        $page ? $this->view("admin/edit_page", $page) : $this->view("404");
+    }
+
+    public function newPage()
+    {
+        $page = new Page();
+        $page->setContent("");
+        $page->setSlug("");
+        $page->setTitle("");
+        $this->write($page);
+        return $this->redirect("admin/page/".$page->getPageId());
+    }
+
     public function savePage($id)
     {
         $page = $this->model()->find($id) ?? new Page();
+        
+        echo '<pre>';
+        print_r($this->post()->get("content"));
+        echo '</pre>';
+
         $page->load($this->post()->all());
         $this->write($page);
+
+        return new JsonResponse(["time" => date("g:i A")]);
     }
 
-    public function getPageFromSlug(string $slug)
+    public function displayPage($slug)
     {
         $page = $this->model()->findOneBy(["slug" => $slug]);
-        $this->displayPage($page);
-    }
-
-    public function getPageFromID(int $id)
-    {
-        $page = $this->model()->findOneBy(["page_id" => $id]);
-        $this->displayPage($page);
-    }
-
-    public function displayPage($page)
-    {
+        $this->setPageTitle($page ? $page->getTitle() : "Blank Page");
         $page ? $this->view("page", $page) : $this->view("404");
     }
 }

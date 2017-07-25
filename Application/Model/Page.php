@@ -16,7 +16,7 @@ class Page extends BaseModel
     private $slug;
     /** @Column(type="string") * */
     private $title;
-    /** @Column(type="string") * */
+    /** @Column(type="text") * */
     private $content;
 
     /**

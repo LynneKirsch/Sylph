@@ -4,6 +4,7 @@ namespace Application\Core;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -13,6 +14,7 @@ class BaseController
     private $html = null;
     private $app;
     private $model = null;
+    private $page_title = null;
 
     public function __construct(App $app)
     {
@@ -68,16 +70,27 @@ class BaseController
         return $this->app()->getSession();
     }
 
+    public function redirect($path)
+    {
+        return new RedirectResponse(BASEPATH.$path);
+    }
+
     public function view($template, $context = [])
     {
-        $context = array_merge($context, $this->getGlobalVars());
+        $data = [
+            "data" => $context,
+            "global" => $this->getGlobalVars()
+        ];
+
         $tpl = $this->app()->getM()->loadTemplate($template);
-        $this->appendHTML($tpl->render($context));
+        $this->appendHTML($tpl->render($data));
     }
 
     public function getHeader()
     {
+        $pages = $this->model(MODEL_PAGE)->findAll();
         $context = $this->getGlobalVars();
+        $context["pages"] = $pages;
         $tpl = $this->app()->getM()->loadTemplate("_template/header");
         return $tpl->render($context);
     }
@@ -93,6 +106,7 @@ class BaseController
     {
         $context['basepath'] = BASEPATH;
         $context['auth'] = $this->session()->get("auth");
+        $context['page_title'] = $this->getPageTitle();
         return $context;
     }
 
@@ -140,5 +154,21 @@ class BaseController
     public function setModel($model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPageTitle()
+    {
+        return $this->page_title;
+    }
+
+    /**
+     * @param null $page_title
+     */
+    public function setPageTitle($page_title)
+    {
+        $this->page_title = $page_title;
     }
 }

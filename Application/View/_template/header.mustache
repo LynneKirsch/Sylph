@@ -3,64 +3,48 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <title>Starter Template</title>
+    <title>{{^page_title}}Sylph{{/page_title}}{{#page_title}}{{page_title}}{{/page_title}}</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <script src="https://use.fontawesome.com/5961da9870.js"></script>
     <link href="{{basepath}}public/sass/styles.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="{{basepath}}public/sass/camera.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!--  Scripts-->
+    <script>var basepath = "{{basepath}}";</script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{{basepath}}public/js/materialize.js"></script>
+    <script src="{{basepath}}public/js/init.js"></script>
+    <script src="{{basepath}}public/js/camera.js"></script>
+    <script src="{{basepath}}public/js/template.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=gmz196ednjlh8ecuzg9erjbmo8h2lz139jdalzs13amytxd0"></script>
 </head>
 <body>
 
 {{#auth}}
-    <nav class="blue darken-3 z-depth-0" role="navigation">
+    <nav class="light-blue z-depth-0" role="navigation">
         <div class="nav-wrapper center container">
-            <a href="#" class="brand-logo hide-on-med-and-up">YZ Oneonta</a>
             <ul class="left hide-on-med-and-down">
                 <li><a href="{{basepath}}logout">Logout</a></li>
-                <li><a href="{{basepath}}admin/users?auth={{auth}}">Users</a></li>
-                <li><a href="{{basepath}}admin/properties?auth={{auth}}">Properties</a></li>
+                <li><a href="{{basepath}}admin/users">Users</a></li>
+                <li><a href="{{basepath}}admin/pages">Pages</a></li>
             </ul>
         </div>
     </nav>
 {{/auth}}
-<br>
-<div class="container">
-    <div class="row middle-xs hide-on-med-and-down">
-        <div class="col l6">
-            <a href="{{basepath}}"><img src="{{basepath}}public/img/logo.png"></a>
-        </div>
-        <div class="col l6 right-align">
-            <h4 class="red-text no-margin">(607) 267-9387</h4>
-            <h5 class="no-margin">277 Main Street &bull; Oneonta</h5>
-        </div>
+<nav class="grey darken-2 z-depth-0">
+    <div class="nav-wrapper container">
+        <a href="{{basepath}}" class="brand-logo" style="font-family: Pacifico, sans-serif">Sylph</a>
+        <ul class="right hide-on-med-and-down">
+            {{#pages}}
+                <li><a href="{{basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
+            {{/pages}}
+        </ul>
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
+</nav>
 
-    <nav class="grey darken-3 z-depth-0" role="navigation">
-        <div class="nav-wrapper center">
-            <a href="#" class="brand-logo hide-on-med-and-up">YZ Oneonta</a>
-            <ul class="left hide-on-med-and-down">
-                <li><a href="#">ABOUT US</a></li>
-                <li><a href="#">3D TOURS</a></li>
-                <li><a href="{{basepath}}properties">PROPERTIES</a></li>
-                <li><a href="#">CONFIGURATIONS</a></li>
-                <li><a href="#">AVAILABILITIES</a></li>
-                <li><a href="#">LEASE INFO</a></li>
-                <li><a href="#">RESMAN</a></li>
-                <li><a href="#">CONTACT</a></li>
-            </ul>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            </ul>
-
-            <ul id="nav-mobile" class="side-nav">
-                <li><a href="#">Navbar Link</a></li>
-            </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-        </div>
-    </nav>
-</div>
-<div class="container main">

@@ -43,9 +43,10 @@ class App
             $called = new $route['class']($this);
 
             /* Find associated model if there is one */
-            $called_basename = str_replace("Controller", "", get_class($called));
+            $reflect = new \ReflectionClass($called);
+            $called_basename = str_replace("Controller", "", $reflect->getShortName());
 
-            if(file_exists(MODEL_PAGE.$called_basename.".php")) {
+            if(file_exists(MODEL_PATH.$called_basename.".php")) {
                 $called->setModel($called_basename);
             }
 
