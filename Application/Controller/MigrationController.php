@@ -12,7 +12,7 @@ class MigrationController extends BaseController
     {
         $models = [];
 
-        $dir = new \DirectoryIterator(MODEL_PATH);
+        $dir = new \DirectoryIterator(MODEL);
         foreach ($dir as $file_info) {
             if (!$file_info->isDot()) {
                 $models[] = $this->app()->em()->getClassMetadata(MODEL_NS . $file_info->getBasename('.php'));

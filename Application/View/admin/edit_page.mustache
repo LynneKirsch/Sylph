@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col l12">
             <a class="btn" href="{{global.basepath}}page/{{data.getSlug}}">View</a>
-            <a class="btn" onclick="savePage()">Save</a> &nbsp; <span id="saved_ts" class="green-text"></span>
+            <a class="btn" onclick="savePage()">Save</a> &nbsp;<span id="saved_autosave" class="green-text"></span> <span id="saved_ts" class="green-text"></span>
         </div>
     </div>
     <div class="row">
@@ -17,9 +17,17 @@
                 <input type="hidden" name="page_id" title="page_id" value="{{data.getPageId}}">
             </form>
             <strong>Content</strong>
-            <textarea name="content" title="content">
-                {{data.getContent}}
-            </textarea>
+            {{> util/editor_toolbar }}
+            <div id="editor" tabindex="1">
+            </div>
+            <input type="hidden" id="editor_delta" value="{{data.getDelta}}">
+            <script src="{{global.basepath}}public/js/editor.js"></script>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l12 ql-editor" id="page_demo_content">
+            {{{data.getContent}}}
         </div>
     </div>
 </div>

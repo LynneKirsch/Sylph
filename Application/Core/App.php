@@ -2,12 +2,11 @@
 
 namespace Application\Core;
 
-use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
-
 
 class App
 {
@@ -23,7 +22,18 @@ class App
         $this->setSession(new \Symfony\Component\HttpFoundation\Session\Session());
         $this->getSession()->start();
         $this->setRequest(Request::createFromGlobals());
-        $this->setEm(EntityManager::create(DB_SETUP, Setup::createAnnotationMetadataConfiguration([MODEL_PATH])));
+
+        $this->setEm(
+            \Doctrine\ORM\EntityManager::create(
+                [
+                    'driver' => SQL_DRIVER,
+                    'user' => MYSQL_USER,
+                    'password' => MYSQL_PASS,
+                    'dbname' => MYSQL_DB
+                ],
+                \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration([MODEL])
+            )
+        );
 
         $this->setM(
             new \Mustache_Engine(array(
@@ -35,7 +45,22 @@ class App
 
     public function run()
     {
-        $route = $this->getRouter()->processRoute();
+        /** send response */
+        $this->generateResponse($this->getRouter()->processRoute());
+    }
+
+    public function generateResponse($route)
+    {
+        // Authorize request first
+        // We'll do something better later
+        if($route["match"]["root"] == "admin") {
+            if(!$this->authenticate()) {
+                $response =  new RedirectResponse(ROOT."login");
+                $response->prepare(Request::createFromGlobals());
+                return $response->send();
+            }
+        }
+
         $response = new Response();
 
         if ($route) {
@@ -46,7 +71,7 @@ class App
             $reflect = new \ReflectionClass($called);
             $called_basename = str_replace("Controller", "", $reflect->getShortName());
 
-            if(file_exists(MODEL_PATH.$called_basename.".php")) {
+            if (file_exists(MODEL . $called_basename . ".php")) {
                 $called->setModel($called_basename);
             }
 
@@ -57,8 +82,8 @@ class App
                 // use the result
                 $response = $result;
             } else {
-                if(is_null($result)) {
-                    if(!is_null($called->getHTML())) {
+                if (is_null($result)) {
+                    if (!is_null($called->getHTML())) {
                         // If the method returned void
                         // but there is HTML set on the called
                         // object, create a page view
@@ -72,13 +97,17 @@ class App
                 }
             }
         } else {
+
+            // If the route was unmatched,
+            // return a 404 page
             $base = new BaseController($this);
             $base->view("404");
             $response = $base->renderPage();
+
         }
 
         $response->prepare(Request::createFromGlobals());
-        $response->send();
+        return $response->send();
     }
 
     public function route($method, $match, $callback)
@@ -86,57 +115,76 @@ class App
         $this->getRouter()->alto()->map($method, $match, $callback);
     }
 
-    /** Mustache */
-    public function getM(): \Mustache_Engine
+    public function authenticate()
+    {
+        if(!$this->getSession()->get("logged_in")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return \Mustache_Engine
+     */
+    public function getM()
     {
         return $this->m;
     }
 
-    public function setM(\Mustache_Engine $m)
+    public function setM($m)
     {
         $this->m = $m;
     }
 
-    /** Entity Manager */
-    public function em(): EntityManager
+    /**
+     * @return EntityManager
+     */
+    public function em()
     {
         return $this->em;
     }
 
-    public function setEm(EntityManager $em)
+    public function setEm($em)
     {
         $this->em = $em;
     }
 
-    /** Requests */
-    public function getRequest(): Request
+    /**
+     * @return Request
+     */
+    public function getRequest()
     {
         return $this->request;
     }
 
-    public function setRequest(Request $request)
+    public function setRequest($request)
     {
         $this->request = $request;
     }
 
-    /** Session */
-    public function getSession(): Session
+    /**
+     * @return Session
+     */
+    public function getSession()
     {
         return $this->session;
     }
 
-    public function setSession(Session $session)
+    public function setSession($session)
     {
         $this->session = $session;
     }
 
-    /** Router */
-    public function getRouter(): Router
+    /**
+     * @return Router
+     */
+    public function getRouter()
     {
         return $this->router;
     }
 
-    public function setRouter(Router $router)
+    public function setRouter($router)
     {
         $this->router = $router;
     }

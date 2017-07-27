@@ -18,6 +18,24 @@ class Page extends BaseModel
     private $title;
     /** @Column(type="text") * */
     private $content;
+    /** @Column(type="text") * */
+    private $delta;
+
+    /**
+     * @return mixed
+     */
+    public function getDelta()
+    {
+        return $this->delta;
+    }
+
+    /**
+     * @param mixed $delta
+     */
+    public function setDelta($delta)
+    {
+        $this->delta = $delta;
+    }
 
     /**
      * @return mixed

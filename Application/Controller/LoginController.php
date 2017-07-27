@@ -22,7 +22,7 @@ class LoginController extends BaseController
     public function processLogin()
     {
         /* @var User $user */
-        $user = $this->model(MODEL_USER)->findOneBy(
+        $user = $this->model("User")->findOneBy(
             [
                 "username" => $this->post()->get("username")
             ]
@@ -32,9 +32,8 @@ class LoginController extends BaseController
             if (password_verify($this->post()->get("password"), $user->getPassword())) {
                 $this->session()->set("logged_in", true);
                 $this->session()->set("username", $user->getUsername());
-                $this->session()->set("auth", bin2hex(random_bytes(64)));
                 $this->session()->remove("login_error");
-                return new RedirectResponse(BASEPATH);
+                return new RedirectResponse(ROOT);
             } else {
                 $this->session()->set("login_error", "Invalid password.");
             }
@@ -44,15 +43,13 @@ class LoginController extends BaseController
 
         $this->session()->set("logged_in", false);
         $this->session()->remove("username");
-        $this->session()->remove("auth");
-        return new RedirectResponse(BASEPATH . "login");
+        return new RedirectResponse(ROOT . "login");
     }
 
     public function processLogout()
     {
         $this->session()->set("logged_in", false);
         $this->session()->remove("username");
-        $this->session()->remove("auth");
-        return new RedirectResponse(BASEPATH . "login");
+        return new RedirectResponse(ROOT . "login");
     }
 }

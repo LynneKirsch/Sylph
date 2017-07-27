@@ -9,18 +9,24 @@ class Router
     public function __construct()
     {
         $this->setAlto(new \AltoRouter());
-        $this->alto()->setBasePath(BASEPATH);
+        $this->alto()->setBasePath(ROOT);
     }
 
-    public function processRoute(): ?array
+    public function processRoute()
     {
-        $match = $this->alto()->match();
+
+        return $this->performRouteMatch($this->alto()->match());
+    }
+
+    public function performRouteMatch($match)
+    {
+
         if ($match && is_callable($match['target'])) {
             call_user_func_array($match['target'], $match['params']);
         } else {
             $match_array = explode("@", $match['target']);
             if (count($match_array) > 1) {
-                if (file_exists(CONTROLLER_PATH . $match_array[0] . ".php")) {
+                if (file_exists(CONTROLLER . $match_array[0] . ".php")) {
                     $class = CONTROLLER_NS . $match_array[0];
                     $method = $match_array[1];
                     if (method_exists($class, $method)) {
@@ -33,9 +39,9 @@ class Router
     }
 
     /**
-     * @return mixed
+     * @return \AltoRouter
      */
-    public function alto(): \AltoRouter
+    public function alto()
     {
         return $this->alto;
     }
@@ -43,7 +49,7 @@ class Router
     /**
      * @param mixed $alto
      */
-    public function setAlto(\AltoRouter $alto)
+    public function setAlto($alto)
     {
         $this->alto = $alto;
     }

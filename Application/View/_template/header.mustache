@@ -7,22 +7,26 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <script src="https://use.fontawesome.com/5961da9870.js"></script>
     <link href="{{basepath}}public/sass/styles.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="{{basepath}}public/sass/camera.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="https://cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
 
     <!--  Scripts-->
     <script>var basepath = "{{basepath}}";</script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
     <script src="{{basepath}}public/js/materialize.js"></script>
     <script src="{{basepath}}public/js/init.js"></script>
     <script src="{{basepath}}public/js/camera.js"></script>
-    <script src="{{basepath}}public/js/template.js"></script>
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=gmz196ednjlh8ecuzg9erjbmo8h2lz139jdalzs13amytxd0"></script>
 </head>
 <body>
 
-{{#auth}}
+{{#logged_in}}
     <nav class="light-blue z-depth-0" role="navigation">
         <div class="nav-wrapper center container">
             <ul class="left hide-on-med-and-down">
@@ -32,7 +36,7 @@
             </ul>
         </div>
     </nav>
-{{/auth}}
+{{/logged_in}}
 <nav class="grey darken-2 z-depth-0">
     <div class="nav-wrapper container">
         <a href="{{basepath}}" class="brand-logo" style="font-family: Pacifico, sans-serif">Sylph</a>

@@ -7,7 +7,7 @@ require_once('vendor/autoload.php');
 /**
  * Load Config
  */
-require_once("application/core/GlobalConfig.php");
+require_once("config.php");
 
 /**
  * Instantiate Application
@@ -15,9 +15,9 @@ require_once("application/core/GlobalConfig.php");
 $app = new \Application\Core\App();
 
 /**
- * Include Routes
+ * Load Routes
  */
-include("Application/HTTP/routes.php");
+require_once("Application/HTTP/routes.php");
 
 /**
  * Run application

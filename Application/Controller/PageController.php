@@ -10,18 +10,21 @@ class PageController extends BaseController
 {
     public function admin()
     {
-        if ($this->authenticate()) {
-            $pages = $this->model()->findAll();
-            $this->view("admin/pages", ["pages" => $pages]);
-        } else {
-            $this->view("404");
-        }
+        $pages = $this->model()->findAll();
+        $this->view("admin/pages", ["pages" => $pages]);
     }
 
     public function edit($id)
     {
         $page = $this->model()->findOneBy(["page_id" => $id]);
-        $page ? $this->view("admin/edit_page", $page) : $this->view("404");
+
+        /* @var \Application\Model\Page $page */
+        if ($page) {
+            $page->setContent(html_entity_decode($page->getContent()));
+            $this->view("admin/edit_page", $page);
+        } else {
+            $this->view("404");
+        }
     }
 
     public function newPage()
@@ -31,27 +34,33 @@ class PageController extends BaseController
         $page->setSlug("");
         $page->setTitle("");
         $this->write($page);
-        return $this->redirect("admin/page/".$page->getPageId());
+        return $this->redirect("admin/page/" . $page->getPageId());
     }
 
     public function savePage($id)
     {
-        $page = $this->model()->find($id) ?? new Page();
-        
-        echo '<pre>';
-        print_r($this->post()->get("content"));
-        echo '</pre>';
+        $post_obj = json_decode($_POST['form']);
 
-        $page->load($this->post()->all());
+        $page = $this->model()->find($id) ? $this->model()->find($id) : new Page();
+        $page->setContent(filter_var($post_obj->html, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        $page->setTitle($post_obj->title);
+        $page->setSlug($post_obj->slug);
+        $page->setDelta(json_encode($post_obj->delta->ops));
         $this->write($page);
-
         return new JsonResponse(["time" => date("g:i A")]);
     }
 
     public function displayPage($slug)
     {
         $page = $this->model()->findOneBy(["slug" => $slug]);
-        $this->setPageTitle($page ? $page->getTitle() : "Blank Page");
-        $page ? $this->view("page", $page) : $this->view("404");
+
+        /* @var \Application\Model\Page $page */
+        if ($page) {
+            $this->setPageTitle($page->getTitle());
+            $page->setContent(html_entity_decode($page->getContent(), ENT_QUOTES));
+            $this->view("page", $page);
+        } else {
+            $this->view("404");
+        }
     }
 }

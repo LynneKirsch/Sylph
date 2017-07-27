@@ -16,33 +16,24 @@ class BaseController
     private $model = null;
     private $page_title = null;
 
-    public function __construct(App $app)
+    public function __construct($app)
     {
         $this->setApp($app);
     }
 
-    public function authenticate()
-    {
-        if($this->session()->get("logged_in")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function write(BaseModel $obj)
+    public function write($obj)
     {
         $this->app()->em()->persist($obj);
         $this->app()->em()->flush();
     }
 
-    public function delete(BaseModel $obj)
+    public function delete($obj)
     {
         $this->app()->em()->remove($obj);
         $this->app()->em()->flush();
     }
 
-    public function model($model = null): EntityRepository
+    public function model($model = null)
     {
         if(!$model) {
             if(!$this->getModel()) {
@@ -55,24 +46,24 @@ class BaseController
         return $this->app()->em()->getRepository(MODEL_NS . $model);
     }
 
-    public function post(): ParameterBag
+    public function post()
     {
         return $this->app()->getRequest()->request;
     }
 
-    public function query(): ParameterBag
+    public function query()
     {
         return $this->app()->getRequest()->query;
     }
 
-    public function session(): Session
+    public function session()
     {
         return $this->app()->getSession();
     }
 
     public function redirect($path)
     {
-        return new RedirectResponse(BASEPATH.$path);
+        return new RedirectResponse(ROOT.$path);
     }
 
     public function view($template, $context = [])
@@ -88,7 +79,7 @@ class BaseController
 
     public function getHeader()
     {
-        $pages = $this->model(MODEL_PAGE)->findAll();
+        $pages = $this->model("Page")->findAll();
         $context = $this->getGlobalVars();
         $context["pages"] = $pages;
         $tpl = $this->app()->getM()->loadTemplate("_template/header");
@@ -104,8 +95,8 @@ class BaseController
 
     public function getGlobalVars()
     {
-        $context['basepath'] = BASEPATH;
-        $context['auth'] = $this->session()->get("auth");
+        $context['basepath'] = ROOT;
+        $context['logged_in'] = $this->session()->get("logged_in");
         $context['page_title'] = $this->getPageTitle();
         return $context;
     }
@@ -120,12 +111,15 @@ class BaseController
         return new Response($content);
     }
 
-    public function app(): App
+    /**
+     * @return App
+     */
+    public function app()
     {
         return $this->app;
     }
 
-    public function setApp(App $app)
+    public function setApp($app)
     {
         $this->app = $app;
     }

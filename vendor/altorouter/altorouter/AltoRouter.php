@@ -183,6 +183,8 @@ class AltoRouter {
 			$requestUrl = substr($requestUrl, 0, $strpos);
 		}
 
+		// For auth stuff, match the root request
+        $request_url_array = explode("/", $requestUrl);
 
 		// set Request Method if it isn't passed as a parameter
 		if($requestMethod === null) {
@@ -253,7 +255,8 @@ class AltoRouter {
 				return array(
 					'target' => $target,
 					'params' => $params,
-					'name' => $name
+					'name' => $name,
+                    'root' => $request_url_array[0]
 				);
 			}
 		}

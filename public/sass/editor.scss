@@ -1,0 +1,39 @@
+#editor {
+  height: 400px; overflow: scroll;
+}
+
+// Pacifico
+.ql-font-pacifico {
+  font-family: "Pacifico";
+}
+
+.ql-picker-options span[data-label="Pacifico"]::before {
+  font-family: "Pacifico";
+}
+
+// Roboto
+.ql-font-roboto {
+  font-family: "Roboto";
+}
+
+.ql-picker-options span[data-label="Roboto"]::before {
+  font-family: "Roboto";
+}
+
+// Bellefair
+.ql-font-bellefair {
+  font-family: "Bellefair";
+}
+
+.ql-picker-options span[data-label="Bellefair"]::before {
+  font-family: "Bellefair";
+}
+
+// Open Sans
+.ql-font-opensans {
+  font-family: "Open Sans";
+}
+
+.ql-picker-options span[data-label="Open Sans"]::before {
+  font-family: "Open Sans";
+}
