@@ -10,23 +10,18 @@ class UserController extends BaseController
 {
     public function admin()
     {
-        if ($this->authenticate()) {
-            $users = $this->model(MODEL_USER)->findAll();
-            $this->view("admin/users", ["users" => $users]);
-        } else {
-            $this->view("permission_denied");
-        }
-
+        $users = $this->model()->findAll();
+        $this->view("admin/users", ["users" => $users]);
         return $this->renderPage();
     }
 
     public function updateUser($id = 0)
     {
         /* @var User $user */
-        $user = $this->model(MODEL_USER)->find($id) ?? new User();
+        $user = coalesce($this->model()->find($id), new User());
         $user->setUsername($this->post()->get("username"));
         $user->setPassword(password_hash($this->post()->get("password"), PASSWORD_BCRYPT));
         $this->write($user);
-        return new RedirectResponse(BASEPATH . "admin/users");
+        return new RedirectResponse(ROOT."admin/users");
     }
 }

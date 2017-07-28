@@ -57,7 +57,7 @@ class PageController extends BaseController
     {
         $post_obj = json_decode($_POST['form']);
 
-        $page = $this->model()->find($id) ? $this->model()->find($id) : new Page();
+        $page = coalesce($this->model()->find($id), new Page());
         $page->setContent(filter_var($post_obj->html, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $page->setTitle($post_obj->title);
         $page->setSlug($post_obj->slug);

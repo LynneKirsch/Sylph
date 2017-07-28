@@ -15,6 +15,7 @@ class App
     private $session;
     private $request;
     private $m;
+    private $authorized_routes = [];
 
     public function __construct()
     {
@@ -53,7 +54,7 @@ class App
     {
         // Authorize request first
         // We'll do something better later
-        if($route["match"]["root"] == "admin") {
+        if(in_array($route["match"]["root"], $this->getAuthorizedRoutes())) {
             if(!$this->authenticate()) {
                 $response =  new RedirectResponse(ROOT."login");
                 $response->prepare(Request::createFromGlobals());
@@ -122,6 +123,16 @@ class App
         }
 
         return true;
+    }
+
+    public function getAuthorizedRoutes()
+    {
+        return $this->authorized_routes;
+    }
+
+    public function registerAuthorizedRoute($route)
+    {
+        array_push($this->authorized_routes, $route);
     }
 
     /**
