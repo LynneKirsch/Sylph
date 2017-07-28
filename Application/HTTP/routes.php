@@ -18,7 +18,8 @@ $app->route("POST", "admin/users/update", "UserController@updateUser");
 
 // PAGES
 $app->route("GET", "page/[a:slug]", "PageController@displayPage");
-$app->route("GET", "admin/pages", "PageController@admin");
+$app->route("GET", "admin/pages", "PageController@pageAdmin");
+$app->route("GET", "admin/posts", "PageController@postAdmin");
 $app->route("GET", "admin/page/[i:id]", "PageController@edit");
 $app->route("POST|GET", "admin/page/save/[i:id]", "PageController@savePage");
 $app->route("GET", "admin/page/new", "PageController@newPage");

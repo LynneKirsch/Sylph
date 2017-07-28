@@ -7,6 +7,7 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $this->view("index", ["name"=>"lynne"]);
+        $page = $this->model("Page")->findOneBy(["page_id" => HOMEPAGE]);
+        $this->view("index", ["page"=>$page]);
     }
 }

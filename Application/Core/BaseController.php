@@ -15,10 +15,21 @@ class BaseController
     private $app;
     private $model = null;
     private $page_title = null;
+    private $js = [];
 
     public function __construct($app)
     {
         $this->setApp($app);
+    }
+
+    /**
+     * @param $js
+     * @return $this
+     */
+    public function loadJs($js)
+    {
+        $this->js = $js;
+        return $this;
     }
 
     public function write($obj)
@@ -35,8 +46,8 @@ class BaseController
 
     public function model($model = null)
     {
-        if(!$model) {
-            if(!$this->getModel()) {
+        if (!$model) {
+            if (!$this->getModel()) {
                 die('$this->model() called with no model to reference.');
             }
 
@@ -63,7 +74,7 @@ class BaseController
 
     public function redirect($path)
     {
-        return new RedirectResponse(ROOT.$path);
+        return new RedirectResponse(ROOT . $path);
     }
 
     public function view($template, $context = [])
@@ -75,20 +86,29 @@ class BaseController
 
         $tpl = $this->app()->getM()->loadTemplate($template);
         $this->appendHTML($tpl->render($data));
+        return $this;
     }
 
     public function getHeader()
     {
-        $pages = $this->model("Page")->findAll();
-        $context = $this->getGlobalVars();
-        $context["pages"] = $pages;
+        $context = [
+            "global" => $this->getGlobalVars(),
+            "data" => [
+                "pages" => $this->model("Page")->findBy(["type" => TYPE_PAGE])
+            ]
+        ];
+
         $tpl = $this->app()->getM()->loadTemplate("_template/header");
         return $tpl->render($context);
     }
 
     public function getFooter()
     {
-        $context = $this->getGlobalVars();
+        $context = [
+            "global" => $this->getGlobalVars(),
+            "js" => $this->js
+        ];
+
         $tpl = $this->app()->getM()->loadTemplate("_template/footer");
         return $tpl->render($context);
     }
@@ -103,12 +123,20 @@ class BaseController
 
     public function renderPage()
     {
-        return new Response($this->getHeader().$this->getHTML().$this->getFooter());
+        return new Response($this->getHeader() . $this->getHTML() . $this->getFooter());
     }
 
     public function response($content)
     {
         return new Response($content);
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function sql()
+    {
+        return $this->app()->em()->createQueryBuilder();
     }
 
     /**

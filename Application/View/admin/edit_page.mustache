@@ -15,14 +15,10 @@
                 <input class="block" name="slug" title="Page Slug" type="text" value="{{data.getSlug}}">
                 <br>
                 <input type="hidden" name="page_id" title="page_id" value="{{data.getPageId}}">
+                <input type="hidden" name="type" title="type_id" value="{{data.getType}}">
             </form>
             <strong>Content</strong>
-            {{> util/editor_toolbar }}
-            <div id="editor" tabindex="1">
-            </div>
-            <input type="hidden" id="editor_delta" value="{{data.getDelta}}">
-            <script src="{{global.basepath}}public/js/editor.js"></script>
-
+            {{> editor/editor }}
         </div>
     </div>
     <div class="row">

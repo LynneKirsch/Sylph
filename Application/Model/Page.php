@@ -6,7 +6,8 @@ use Application\Core\BaseModel;
 /**
  * Application/Model/Page.php
  *
- * @Entity @Table(name="`pages`")
+ * @Entity
+ * @Table(name="`pages`")
  */
 class Page extends BaseModel
 {
@@ -20,6 +21,10 @@ class Page extends BaseModel
     private $content;
     /** @Column(type="text") * */
     private $delta;
+    /** @Column(type="integer") * */
+    private $type;
+    /** @Column(type="text") */
+    private $date;
 
     /**
      * @return mixed
@@ -100,6 +105,66 @@ class Page extends BaseModel
     {
         $this->content = $content;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    public function getFormattedDate()
+    {
+        // dates are YYYYMMDDHHIISS | YmdHis
+        $year = substr($this->date, 0, 4);
+        $month = substr($this->date, 4, 2);
+        $day = substr($this->date, 6, 2);
+        $hours = substr($this->date, 8, 2);
+        $minutes = substr($this->date, 10, 2);
+        $time = date("g:i A", strtotime($hours . ":" . $minutes));
+
+        return [
+            "month" => $month,
+            "day" => $day,
+            "year" => $year,
+            "time" => $time
+        ];
+    }
+
+    public function setupNew()
+    {
+        $this->setContent("");
+        $this->setSlug("");
+        $this->setTitle("");
+        $this->setDate(date("YmdHis"));
+        return $this;
+    }
+
 
 
 }

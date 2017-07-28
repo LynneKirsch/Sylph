@@ -17,10 +17,22 @@ define("MODEL_NS", "Application\\Model\\");
 define("CONTROLLER_NS", "Application\\Controller\\");
 
 /**
+ * Define models
+ */
+const MODEL_PAGE = MODEL_NS."Page";
+/**
  * Configure Database connection
  */
 define("SQL_DRIVER", "pdo_mysql");
 define("MYSQL_USER", "yzstuden_admin");
 define("MYSQL_PASS", "polkij7890");
 define("MYSQL_DB", "yzstuden_housing");
+
+/**
+ * Configure content types
+ */
+const TYPE_PAGE = 1;
+const TYPE_POST = 2;
+const HOMEPAGE = 2;
+const POST_LIMIT = 10;
 

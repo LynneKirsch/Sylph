@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <title>{{^page_title}}Sylph{{/page_title}}{{#page_title}}{{page_title}}{{/page_title}}</title>
+    <title>{{^global.page_title}}Sylph{{/global.page_title}}{{#global.page_title}}{{global.page_title}}{{/global.page_title}}</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
@@ -12,38 +12,31 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <script src="https://use.fontawesome.com/5961da9870.js"></script>
-    <link href="{{basepath}}public/sass/styles.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="{{basepath}}public/sass/camera.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{{global.basepath}}public/sass/styles.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{{global.basepath}}public/sass/camera.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="https://cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
 
     <!--  Scripts-->
-    <script>var basepath = "{{basepath}}";</script>
+    <script>var basepath = "{{global.basepath}}";</script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.0/quill.js"></script>
-    <script src="{{basepath}}public/js/materialize.js"></script>
-    <script src="{{basepath}}public/js/init.js"></script>
-    <script src="{{basepath}}public/js/camera.js"></script>
+    <script src="{{global.basepath}}public/js/materialize.js"></script>
+    <script src="{{global.basepath}}public/js/init.js"></script>
+    <script src="{{global.basepath}}public/js/camera.js"></script>
 </head>
 <body>
 
-{{#logged_in}}
-    <nav class="light-blue z-depth-0" role="navigation">
-        <div class="nav-wrapper center container">
-            <ul class="left hide-on-med-and-down">
-                <li><a href="{{basepath}}logout">Logout</a></li>
-                <li><a href="{{basepath}}admin/users">Users</a></li>
-                <li><a href="{{basepath}}admin/pages">Pages</a></li>
-            </ul>
-        </div>
-    </nav>
-{{/logged_in}}
+{{#global.logged_in}}
+    {{> admin/nav }}
+{{/global.logged_in}}
+
 <nav class="grey darken-2 z-depth-0">
     <div class="nav-wrapper container">
-        <a href="{{basepath}}" class="brand-logo" style="font-family: Pacifico, sans-serif">Sylph</a>
+        <a href="{{global.basepath}}" class="brand-logo" style="font-family: Pacifico, sans-serif">Sylph</a>
         <ul class="right hide-on-med-and-down">
-            {{#pages}}
-                <li><a href="{{basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
-            {{/pages}}
+            {{#data.pages}}
+                <li><a href="{{global.basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
+            {{/data.pages}}
         </ul>
         <ul id="nav-mobile" class="side-nav">
             <li><a href="#">Navbar Link</a></li>

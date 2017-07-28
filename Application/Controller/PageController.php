@@ -4,13 +4,20 @@ namespace Application\Controller;
 
 use Application\Core\BaseController;
 use Application\Model\Page;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PageController extends BaseController
 {
-    public function admin()
+    public function pageAdmin()
     {
-        $pages = $this->model()->findAll();
+        $pages = $this->model()->findBy(["type" => TYPE_PAGE]);
+        $this->view("admin/pages", ["pages" => $pages]);
+    }
+
+    public function postAdmin()
+    {
+        $pages = $this->model()->findBy(["type" => TYPE_POST]);
         $this->view("admin/pages", ["pages" => $pages]);
     }
 
@@ -21,19 +28,28 @@ class PageController extends BaseController
         /* @var \Application\Model\Page $page */
         if ($page) {
             $page->setContent(html_entity_decode($page->getContent()));
-            $this->view("admin/edit_page", $page);
+            $this->view("admin/edit_page", $page)->loadJs(["editor", "page"]);
         } else {
             $this->view("404");
         }
     }
 
+    public function getPostList($page = 1)
+    {
+        $sql = $this->sql()
+            ->select('COUNT(page_id)')
+            ->from(MODEL_PAGE, 'posts')
+            ->where("type = ".TYPE_POST);
+
+        $post_count = $sql->getQuery()->getResult();
+        $num_pages = ceil($post_count / POST_LIMIT);
+        $posts = $this->model()->findBy(["type" => TYPE_POST], ["date" => "DESC"], POST_LIMIT, (($page - 1) * POST_LIMIT));
+    }
+
     public function newPage()
     {
         $page = new Page();
-        $page->setContent("");
-        $page->setSlug("");
-        $page->setTitle("");
-        $this->write($page);
+        $this->write($page->setupNew());
         return $this->redirect("admin/page/" . $page->getPageId());
     }
 
