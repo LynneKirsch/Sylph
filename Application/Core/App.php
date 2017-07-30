@@ -23,25 +23,8 @@ class App
         $this->setSession(new \Symfony\Component\HttpFoundation\Session\Session());
         $this->getSession()->start();
         $this->setRequest(Request::createFromGlobals());
-
-        $this->setEm(
-            \Doctrine\ORM\EntityManager::create(
-                [
-                    'driver' => SQL_DRIVER,
-                    'user' => MYSQL_USER,
-                    'password' => MYSQL_PASS,
-                    'dbname' => MYSQL_DB
-                ],
-                \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration([MODEL])
-            )
-        );
-
-        $this->setM(
-            new \Mustache_Engine(array(
-                'loader' => new \Mustache_Loader_FilesystemLoader(TEMPLATE_PATH),
-                'partials_loader' => new \Mustache_Loader_FilesystemLoader(PARTIALS_PATH)
-            ))
-        );
+        $this->setEm(EntityInterface::create());
+        $this->setM(MustacheInterface::create());
     }
 
     public function run()
@@ -61,7 +44,6 @@ class App
                 return $response->send();
             }
         }
-
         $response = new Response();
 
         if ($route) {

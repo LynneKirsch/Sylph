@@ -1,0 +1,17 @@
+<div class="row slide_row">
+    <div class="col l4">
+        <input class="block" type="text" name="url[]" title="url" value="{{#img_url}}{{img_url}}{{/img_url}}">
+    </div>
+    <div class="col l3">
+        <input class="block"  type="text" name="caption[]" title="caption" value="{{caption}}">
+    </div>
+    <div class="col l3">
+        <input class="block"  type="text" name="link[]" title="link" value="{{to_link}}">
+    </div>
+    <div class="col l1">
+        <a class="btn" onclick="removeSlide(this)"><i class="fa fa-minus" aria-hidden="true"></i></a>
+    </div>
+    <div class="col l1">
+        <a class="btn" onclick="newSlide()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    </div>
+</div>

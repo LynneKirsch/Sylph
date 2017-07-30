@@ -35,5 +35,5 @@ Quill.register(Font, true);
 
 $(document).ready(function () {
     quill.updateContents($.parseJSON($("#editor_delta").val()));
-    setInterval(function(){$("#saved_autosave").html("Autosave"); savePage(true); }, 5000);
+    setInterval(function(){savePage(true)}, 5000);
 });

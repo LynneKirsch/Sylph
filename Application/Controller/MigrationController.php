@@ -32,6 +32,8 @@ class MigrationController extends BaseController
 
     public function performMigration()
     {
+        
+
         $sql = $this->generateSQL();
         if($sql) {
             $stmt = $this->app()->em()->getConnection()->prepare(implode(";\n", $sql));
@@ -43,5 +45,7 @@ class MigrationController extends BaseController
         } else {
             echo "Nothing to migrate.";
         }
+
+        die();
     }
 }

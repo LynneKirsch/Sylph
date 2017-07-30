@@ -24,3 +24,4 @@ require_once("Application/HTTP/routes.php");
  * Run application
  */
 $app->run();
+

@@ -40,8 +40,10 @@ class BaseController
 
     public function delete($obj)
     {
-        $this->app()->em()->remove($obj);
-        $this->app()->em()->flush();
+        if($obj) {
+            $this->app()->em()->remove($obj);
+            $this->app()->em()->flush();
+        }
     }
 
     public function model($model = null)
@@ -53,6 +55,7 @@ class BaseController
 
             $model = $this->getModel();
         }
+
 
         return $this->app()->em()->getRepository(MODEL_NS . $model);
     }
@@ -79,14 +82,19 @@ class BaseController
 
     public function view($template, $context = [])
     {
+        $this->appendHTML($this->render($template, $context));
+        return $this;
+    }
+
+    public function render($template, $context = [])
+    {
         $data = [
             "data" => $context,
             "global" => $this->getGlobalVars()
         ];
 
         $tpl = $this->app()->getM()->loadTemplate($template);
-        $this->appendHTML($tpl->render($data));
-        return $this;
+        return $tpl->render($data);
     }
 
     public function getHeader()
@@ -130,6 +138,7 @@ class BaseController
     {
         return new Response($content);
     }
+
 
     /**
      * @return \Doctrine\ORM\QueryBuilder

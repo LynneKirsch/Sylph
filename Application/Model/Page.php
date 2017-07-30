@@ -2,6 +2,8 @@
 namespace Application\Model;
 
 use Application\Core\BaseModel;
+use Application\Core\EntityInterface;
+use Application\Core\MustacheInterface;
 
 /**
  * Application/Model/Page.php
@@ -25,6 +27,8 @@ class Page extends BaseModel
     private $type;
     /** @Column(type="text") */
     private $date;
+    /** @Column(type="text", nullable=true) */
+    private $slideshow_id;
 
     /**
      * @return mixed
@@ -138,6 +142,22 @@ class Page extends BaseModel
         $this->date = $date;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSlideshowId()
+    {
+        return $this->slideshow_id;
+    }
+
+    /**
+     * @param mixed $slideshow_id
+     */
+    public function setSlideshowId($slideshow_id)
+    {
+        $this->slideshow_id = $slideshow_id;
+    }
+
     public function getFormattedDate()
     {
         // dates are YYYYMMDDHHIISS | YmdHis
@@ -156,13 +176,71 @@ class Page extends BaseModel
         ];
     }
 
-    public function setupNew()
+    public function setupNew($type)
     {
         $this->setContent("");
         $this->setSlug("");
         $this->setTitle("");
         $this->setDate(date("YmdHis"));
+        $this->setDelta("");
+        $this->setType($type);
         return $this;
+    }
+
+    public function isHomePage()
+    {
+        if($this->getPageId() == EntityInterface::getConfig("homepage")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function parsePageContent()
+    {
+        $content = html_entity_decode($this->getContent(), ENT_QUOTES);
+        preg_match_all('/%(.*?)\%/s', $content, $matches);
+
+        foreach($matches[1] as $match) {
+            $match_array = explode(".", $match);
+
+            switch($match_array[0]) {
+                CASE "config":
+                    $config = EntityInterface::getConfig($match_array[1]);
+                    if($config) {
+                        $content = str_replace("%".$match_array[0].".".$match_array[1]."%", $config->getConfigVal(), $content);
+                    }
+                    break;
+                CASE "slideshow":
+                    if($this->getSlideshowId()) {
+                        $slideshow = EntityInterface::getSlide($this->getSlideshowId());
+                        $html = MustacheInterface::render("partials/slideshow", ["slides" => $slideshow->getSlideArray()]);
+                        $content = str_replace("%slideshow%", $html, $content);
+                    }
+                    break;
+            }
+        }
+
+        return $content;
+    }
+
+    public function getSlideShow()
+    {
+        if($this->getSlideshowId()) {
+            $em = EntityInterface::create();
+            $slideshow = $em->getRepository(MODEL_NS."Slideshow")->findOneBy(["slideshow_id" => $this->getSlideshowId()]);
+
+            if($slideshow) {
+                return $slideshow;
+            }
+        }
+
+        return null;
+    }
+
+    public function renderSlideShow()
+    {
+
     }
 
 

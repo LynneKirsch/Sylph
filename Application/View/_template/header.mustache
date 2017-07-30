@@ -35,7 +35,9 @@
         <a href="{{global.basepath}}" class="brand-logo" style="font-family: Pacifico, sans-serif">Sylph</a>
         <ul class="right hide-on-med-and-down">
             {{#data.pages}}
-                <li><a href="{{global.basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
+                {{^isHomePage}}
+                    <li><a href="{{global.basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
+                {{/isHomePage}}
             {{/data.pages}}
         </ul>
         <ul id="nav-mobile" class="side-nav">

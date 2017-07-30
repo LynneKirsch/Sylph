@@ -15,3 +15,8 @@ $(document).ready(function () {
 function getPath(path) {
     return basepath + path;
 }
+
+function viewPath(path)
+{
+    return basepath + 'Application/View/'+path+".mustache";
+}

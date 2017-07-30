@@ -1,0 +1,24 @@
+<div class="container main">
+    <div class="row">
+        <div class="col s12">
+            <h5>Site Configuration</h5>
+        </div>
+    </div>
+
+    {{#data.config}}
+        <form method="POST" action="{{global.basepath}}admin/config/update/{{getConfigId}}">
+            <div class="row middle-xs">
+                <div class="col l6">
+                    {{getConfigCode}}
+                </div>
+                <div class="col l4">
+                    <input class="block" name="config_val" id="config_val" title="config_val" type="text" value="{{getConfigVal}}">
+                </div>
+                <div class="col l2">
+                    <button class="btn block">Update</button>
+                </div>
+            </div>
+        </form>
+        <hr>
+    {{/data.config}}
+</div>

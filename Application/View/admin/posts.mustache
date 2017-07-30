@@ -1,7 +1,7 @@
 <div class="container main">
     <div class="row">
         <div class="col l12">
-            <a class="btn" href="{{global.basepath}}admin/page/new">New Page</a>
+            <a class="btn" href="{{global.basepath}}admin/post/new">New Post</a>
         </div>
     </div>
     <div class="row middle-xs" style="font-weight: bold;">
@@ -25,13 +25,13 @@
                     /page/{{getSlug}}
                 </div>
                 <div class="col l1">
-                    <a class="btn z-depth-0 block " href="{{global.basepath}}admin/page/{{getPageId}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="btn z-depth-0 block" href="{{global.basepath}}admin/page/{{getPageId}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 <div class="col l1">
                     <a class="btn z-depth-0 block" href="{{global.basepath}}page/{{getSlug}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 </div>
                 <div class="col l1">
-                    <a class="btn z-depth-0 block {{#isHomePage}}disabled{{/isHomePage}}" onclick="deletePage({{getPageId}})"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="btn z-depth-0 block" onclick="deletePage({{getPageId}})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </div>
             </div>
         {{/data.pages}}

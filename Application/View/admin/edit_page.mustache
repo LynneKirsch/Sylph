@@ -1,8 +1,9 @@
 <div class="container main">
     <div class="row">
         <div class="col l12">
-            <a class="btn" href="{{global.basepath}}page/{{data.getSlug}}">View</a>
-            <a class="btn" onclick="savePage()">Save</a> &nbsp;<span id="saved_autosave" class="green-text"></span> <span id="saved_ts" class="green-text"></span>
+            <a class="btn" href="{{global.basepath}}page/{{data.getSlug}}"><i class="fa fa-link" aria-hidden="true"></i></a>
+            <a class="btn" onclick="savePage()"><i class="fa fa-floppy-o" aria-hidden="true"></i></a> &nbsp;<span
+                id="saved_autosave" class="green-text"></span> <span id="saved_ts" class="green-text"></span>
         </div>
     </div>
     <div class="row">
@@ -21,9 +22,38 @@
             {{> editor/editor }}
         </div>
     </div>
-    <div class="row">
-        <div class="col l12 ql-editor" id="page_demo_content">
-            {{{data.getContent}}}
+    {{^data.getSlideShow}}
+        <a class="btn" href="{{global.basepath}}admin/add_slideshow/{{data.getPageId}}">Add Slideshow</a>
+    {{/data.getSlideShow}}
+
+    {{#data.getSlideshowId}}
+    <form method="post" action="{{global.basepath}}admin/save_slideshow">
+        <div class="row">
+            <div class="col l4">
+                Image URL
+            </div>
+            <div class="col l3">
+                Caption
+            </div>
+            <div class="col l3">
+                Target Link
+            </div>
+            <div class="col l1">
+                &nbsp;
+            </div>
+            <div class="col l1">
+                &nbsp;
+            </div>
         </div>
-    </div>
+        <span id="slides_wrap">
+            {{#data.getSlideShow.getSlideArray}}
+                    {{> admin/slide_row}}
+            {{/data.getSlideShow.getSlideArray}}
+        </span>
+        <input type="hidden" name="page_id" value="{{data.getPageId}}">
+        <input type="hidden" name="slideshow_id" value="{{data.getSlideshowId}}">
+        <button type="submit" class="btn">Save</button> <a class="btn" onclick="newSlide()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    </form>
+    {{/data.getSlideshowId}}
+<br>
 </div>

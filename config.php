@@ -2,7 +2,7 @@
 /**
  * Define paths
  */
-define("ROOT", "/~yzstudentrentals/");
+define("ROOT", "/Sylph/");
 define("APP", "Application" . DIRECTORY_SEPARATOR);
 define("MODEL", APP . "Model" . DIRECTORY_SEPARATOR);
 define("TEMPLATE_PATH", APP . "View");
@@ -24,9 +24,9 @@ const MODEL_PAGE = MODEL_NS."Page";
  * Configure Database connection
  */
 define("SQL_DRIVER", "pdo_mysql");
-define("MYSQL_USER", "yzstuden_admin");
-define("MYSQL_PASS", "polkij7890");
-define("MYSQL_DB", "yzstuden_housing");
+define("MYSQL_USER", "root");
+define("MYSQL_PASS", "");
+define("MYSQL_DB", "exodus");
 
 /**
  * Configure content types
