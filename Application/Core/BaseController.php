@@ -139,7 +139,18 @@ class BaseController
         return new Response($content);
     }
 
+    public function config($config_key)
+    {
+        $config = $this->model("Config")->findOneBy([
+            "config_code" => $config_key
+        ]);
 
+        if($config) {
+            return $config->getConfigVal();
+        }
+
+        return null;
+    }
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */

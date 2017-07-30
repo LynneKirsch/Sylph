@@ -19,7 +19,8 @@ define("CONTROLLER_NS", "Application\\Controller\\");
 /**
  * Define models
  */
-const MODEL_PAGE = MODEL_NS."Page";
+define("MODEL_PAGE", MODEL_NS."Page");
+
 /**
  * Configure Database connection
  */
