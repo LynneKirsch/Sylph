@@ -1,0 +1,54 @@
+<div class="container main">
+    <div class="row">
+        <div class="col l12">
+            <a class="btn" href="{{global.basepath}}admin/property/new">New Property</a>
+        </div>
+    </div>
+    <div class="row middle-xs" style="font-weight: bold;">
+        <div class="col l2">
+            Address 1
+        </div>
+        <div class="col l2">
+            Address 2
+        </div>
+        <div class="col l2">
+            Beds
+        </div>
+        <div class="col l2">
+            Baths
+        </div>
+        <div class="col l2">
+            H-Baths
+        </div>
+        <div class="col l2">
+            &nbsp;
+        </div>
+    </div>
+    <div class="page_list_wrap">
+        {{#data.properties}}
+            <div class="row middle-xs property_{{getPropertyId}}">
+                <div class="col l2">
+                    {{getAddress1}}
+                </div>
+                <div class="col l2">
+                    {{getAddress2}}
+                </div>
+                <div class="col l2">
+                    {{getBedrooms}}
+                </div>
+                <div class="col l2">
+                    {{getBathrooms}}
+                </div>
+                <div class="col l2">
+                    {{getHalfBaths}}
+                </div>
+                <div class="col l1">
+                    <a class="btn z-depth-0 block" href="{{global.basepath}}admin/property/{{getPropertyId}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+                <div class="col l1">
+                    <a class="btn z-depth-0 block" onclick="deleteProperty({{getPropertyId}})"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        {{/data.properties}}
+    </div>
+</div>

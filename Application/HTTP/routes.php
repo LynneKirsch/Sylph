@@ -25,14 +25,20 @@ $app->route("GET", "page/[a:slug]", "PageController@displayPage");
 /*****************************************************************
  * ADMIN ROUTES
  ****************************************************************/
-// PAGES/POSTS
+// PAGES
 $app->route("GET", "admin/pages", "PageController@pageAdmin");
-$app->route("GET", "admin/posts", "PageController@postAdmin");
 $app->route("GET", "admin/page/[i:id]", "PageController@edit");
 $app->route("POST", "admin/page/save/[i:id]", "PageController@savePage");
 $app->route("POST", "admin/page/delete/[i:id]", "PageController@deletePage");
 $app->route("GET", "admin/page/new", "PageController@newPage");
+// POSTS
 $app->route("GET", "admin/post/new", "PageController@newPost");
+$app->route("GET", "admin/posts", "PageController@postAdmin");
+// PROPERTIES
+$app->route("GET", "admin/properties", "PropertyController@admin");
+$app->route("GET", "admin/property/new", "PropertyController@newProperty");
+$app->route("POST", "admin/property/save", "PropertyController@saveProperty");
+$app->route("GET", "admin/property/[i:id]", "PropertyController@editProperty");
 // SLIDESHOWS
 $app->route("GET", "admin/add_slideshow/[i:id]", "PageController@addSlideshow");
 $app->route("POST", "admin/save_slideshow", "PageController@saveSlideshow");

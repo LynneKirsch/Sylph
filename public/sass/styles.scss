@@ -139,3 +139,26 @@ input:not([type]), input[type=text]:not(.browser-default), input[type=password]:
 {
   background: #FFFFFF;
 }
+
+span.gal_img_wrap {
+  display: block;
+  float: left;
+  margin-right: 10px;
+
+  img {
+    display: block;
+  }
+
+  .delete_btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: red;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+    cursor: pointer;
+  }
+}

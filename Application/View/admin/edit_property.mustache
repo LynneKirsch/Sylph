@@ -1,0 +1,112 @@
+<div class="container main">
+    <div class="row">
+        <div class="col l12">
+            <form method="post" action="{{global.basepath}}admin/property/save" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col l6">
+                        <strong>Address 1</strong>
+                        <input class="block" type="text" name="address1" value="{{data.property.getAddress1}}">
+                    </div>
+                    <div class="col l6">
+                        <strong>Address 2</strong>
+                        <input class="block" type="text" name="address2" value="{{data.property.getAddress2}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l4">
+                        <strong>Bedrooms</strong>
+                        <input class="block" type="text" name="bedrooms" value="{{data.property.getBedrooms}}">
+                    </div>
+                    <div class="col l4">
+                        <strong>Full Baths</strong>
+                        <input class="block" type="text" name="bathrooms" value="{{data.property.getBathrooms}}">
+                    </div>
+                    <div class="col l4">
+                        <strong>Half Baths</strong>
+                        <input class="block" type="text" name="half_baths" value="{{data.property.getHalfBaths}}">
+                    </div>
+                </div>
+                <div class="row middle-xs">
+                    <div class="col l6">
+                        <input type="checkbox" id="active" name="active"/>
+                        <label for="active">Available</label>
+                    </div>
+                    <div class="col l6">
+                        <div class="row">
+                            <div class="col l4">
+                                <strong>Month</strong>
+                                <select name="month">
+                                    {{#data.months}}
+                                        <option value="{{.}}">{{.}}</option>
+                                    {{/data.months}}
+                                </select>
+                            </div>
+                            <div class="col l4">
+                                <strong>Day</strong>
+                                <select name="day">
+                                    {{#data.days}}
+                                        <option value="{{.}}">{{.}}</option>
+                                    {{/data.days}}
+                                </select>
+                            </div>
+                            <div class="col l4">
+                                <strong>Year</strong>
+                                <select name="year">
+                                    {{#data.years}}
+                                        <option value="{{.}}">{{.}}</option>
+                                    {{/data.years}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row middle-xs">
+                    <div class="col l8">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Upload Featured Img</span>
+                                <input type="file" name="feature_image">
+                                <input type="hidden" name="feature_image" value="{{data.property.getFeatureImage}}">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l4">
+                        {{#data.property.getFeatureImage}}
+                            <img src="{{data.property.getFeatureImage}}" style="width: 100%">
+                        {{/data.property.getFeatureImage}}
+                    </div>
+                </div>
+                <div class="row middle-xs">
+                    <div class="col l12">
+                        <h4>Property Gallery</h4>
+                        <div class="row">
+                            <div class="col l12">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Upload Images to Gallery</span>
+                                        <input type="file" name="gallery[]" multiple>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{#data.property.getGalleryArray}}
+                            <span class="gal_img_wrap" style="position: relative" id="{{id}}">
+                                <img src="{{src}}" style="height: 150px;">
+                                <input type="hidden" name="gallery_img[]" value="{{src}}">
+                                <span class="delete_btn" onclick="deleteGalleryImage('{{id}}')"><i class="fa fa-minus-circle" aria-hidden="true"></i></span>
+                            </span>
+                        {{/data.property.getGalleryArray}}
+                    </div>
+                </div>
+                <input type="hidden" name="property_id" value="{{data.property.getPropertyId}}">
+                <input class="btn" type="submit" value="Save" name="submit">
+            </form>
+        </div>
+    </div>
+</div>

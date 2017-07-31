@@ -3,6 +3,7 @@
 namespace Application\Core;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +69,15 @@ class BaseController
     public function query()
     {
         return $this->app()->getRequest()->query;
+    }
+
+    /**
+     * @param $name
+     * @return UploadedFile
+     */
+    public function file($name)
+    {
+        return $this->app()->getRequest()->files->get($name);
     }
 
     public function session()
