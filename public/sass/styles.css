@@ -4982,7 +4982,7 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::before {
 /* Select Field
    ========================================================================== */
 select {
-  display: none; }
+  display: block; }
 
 select.browser-default {
   display: block; }
@@ -6876,6 +6876,57 @@ body {
   box-shadow: none !important; }
 
 img {
-  max-width: 100%; }
+  max-width: 100%;
+  width: auto; }
+
+.camera_wrap img {
+  display: block; }
+
+.nav-wrapper ul li a {
+  text-transform: uppercase; }
+
+.col.ql-editor {
+  box-sizing: border-box;
+  line-height: inherit;
+  height: auto;
+  outline: none;
+  overflow: auto;
+  overflow-x: hidden;
+  padding: 0;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  text-align: left;
+  white-space: normal;
+  word-wrap: normal; }
+
+.modal {
+  border: 3px solid black;
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8); }
+  .modal .modal-content h4 {
+    font-family: Pacifico, sans-serif;
+    color: #D32F2F; }
+
+.bubble {
+  background: #eee;
+  padding: 1rem;
+  border-radius: 3px; }
+
+section.admin {
+  background: #f2f2f2;
+  padding: 1rem;
+  border: 1px solid #ddd; }
+
+h4.section_header {
+  margin-bottom: 0;
+  background: #ddd;
+  font-size: 18px;
+  padding: 1rem; }
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+  background: #FFFFFF; }
 
 /*# sourceMappingURL=styles.css.map */

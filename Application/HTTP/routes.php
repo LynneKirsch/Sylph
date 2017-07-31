@@ -11,13 +11,21 @@ $app->route("GET", "logout", "LoginController@processLogout");
 /** MIGRATIONS */
 $app->route("GET", "migrate", "MigrationController@performMigration");
 
-// USERS
-$app->route("GET", "admin/users", "UserController@admin");
-$app->route("POST", "admin/users/update/[i:id]", "UserController@updateUser");
-$app->route("POST", "admin/users/update", "UserController@updateUser");
 
-// PAGES
+
+/*****************************************************************
+ * Pages
+ ****************************************************************/
+// Override custom pages...
+$app->route("GET", "page/properties", "PropertyController@index");
+
+// Display normal pages
 $app->route("GET", "page/[a:slug]", "PageController@displayPage");
+
+/*****************************************************************
+ * ADMIN ROUTES
+ ****************************************************************/
+// PAGES/POSTS
 $app->route("GET", "admin/pages", "PageController@pageAdmin");
 $app->route("GET", "admin/posts", "PageController@postAdmin");
 $app->route("GET", "admin/page/[i:id]", "PageController@edit");
@@ -25,10 +33,16 @@ $app->route("POST", "admin/page/save/[i:id]", "PageController@savePage");
 $app->route("POST", "admin/page/delete/[i:id]", "PageController@deletePage");
 $app->route("GET", "admin/page/new", "PageController@newPage");
 $app->route("GET", "admin/post/new", "PageController@newPost");
+// SLIDESHOWS
 $app->route("GET", "admin/add_slideshow/[i:id]", "PageController@addSlideshow");
 $app->route("POST", "admin/save_slideshow", "PageController@saveSlideshow");
+// CONFIG
 $app->route("GET", "admin/config", "ConfigController@admin");
 $app->route("POST", "admin/config/update/[i:id]", "ConfigController@update");
+// USERS
+$app->route("GET", "admin/users", "UserController@admin");
+$app->route("POST", "admin/users/update/[i:id]", "UserController@updateUser");
+$app->route("POST", "admin/users/update", "UserController@updateUser");
 
 /** Authorized Routes */
 $app->registerAuthorizedRoute("admin");

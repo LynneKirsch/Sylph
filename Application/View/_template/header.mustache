@@ -26,22 +26,49 @@
 </head>
 <body>
 
-{{#global.logged_in}}
-    {{> admin/nav }}
-{{/global.logged_in}}
-
+<div class="hide-on-med-and-down">
+    {{#global.logged_in}}
+        {{> admin/nav }}
+    {{/global.logged_in}}
+    <br>
+</div>
+<div class="container hide-on-med-and-down">
+    <div class="row middle-xs">
+        <div class="col l6">
+            <a href="{{global.basepath}}"><img src="{{global.basepath}}public/img/logo.png"></a>
+        </div>
+        <div class="col l6 right-align">
+            <h2 class="red-text">(607) 267-9387</h2>
+            <h4>277 Main Street &bull; Oneonta</h4>
+        </div>
+    </div>
+</div>
 <nav class="grey darken-2 z-depth-0">
     <div class="nav-wrapper container">
-        <a href="{{global.basepath}}" class="brand-logo" style="font-family: Pacifico, sans-serif">Sylph</a>
-        <ul class="right hide-on-med-and-down">
+        <a href="{{global.basepath}}" class="brand-logo hide-on-large-only" style="font-family: Roboto, sans-serif">YZ Oneonta</a>
+        <ul class="left hide-on-med-and-down">
             {{#data.pages}}
                 {{^isHomePage}}
                     <li><a href="{{global.basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
                 {{/isHomePage}}
             {{/data.pages}}
         </ul>
+        <ul class="right hide-on-med-and-down">
+            <li><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        </ul>
         <ul id="nav-mobile" class="side-nav">
-            <li><a href="#">Navbar Link</a></li>
+            <div class="center" style="margin-top: 10px; color: black; line-height: 20px;">
+                <a href="{{global.basepath}}"><img src="{{global.basepath}}public/img/logo.png"></a>
+                <div class="red-text">(607) 267-9387</div>
+                <div>277 Main Street &bull; Oneonta</div>
+            </div>
+            {{#data.pages}}
+                {{^isHomePage}}
+                    <li><a href="{{global.basepath}}page/{{getSlug}}">{{getTitle}}</a></li>
+                {{/isHomePage}}
+            {{/data.pages}}
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>

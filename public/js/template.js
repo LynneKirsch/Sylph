@@ -10,6 +10,9 @@ $(document).ready(function () {
         time: 3e3,
         transPeriod: 3000
     });
+
+    var page_id = $("#page_id").val();
+    $("#modal_page_"+page_id).modal('open');
 });
 
 function getPath(path) {

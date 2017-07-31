@@ -1,59 +1,95 @@
 <div class="container main">
-    <div class="row">
-        <div class="col l12">
-            <a class="btn" href="{{global.basepath}}page/{{data.getSlug}}"><i class="fa fa-link" aria-hidden="true"></i></a>
-            <a class="btn" onclick="savePage()"><i class="fa fa-floppy-o" aria-hidden="true"></i></a> &nbsp;<span
-                id="saved_autosave" class="green-text"></span> <span id="saved_ts" class="green-text"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col l12">
-            <form id="page_main_form" action="{{global.basepath}}admin/page/save/{{data.getPageId}}">
-                <strong>Page Name</strong>
-                <input class="block" name="title" title="Page Title" type="text" value="{{data.getTitle}}">
-                <br>
-                <strong>Slug</strong>
-                <input class="block" name="slug" title="Page Slug" type="text" value="{{data.getSlug}}">
-                <br>
-                <input type="hidden" name="page_id" title="page_id" value="{{data.getPageId}}">
-                <input type="hidden" name="type" title="type_id" value="{{data.getType}}">
-            </form>
-            <strong>Content</strong>
-            {{> editor/editor }}
-        </div>
-    </div>
-    {{^data.getSlideShow}}
-        <a class="btn" href="{{global.basepath}}admin/add_slideshow/{{data.getPageId}}">Add Slideshow</a>
-    {{/data.getSlideShow}}
-
-    {{#data.getSlideshowId}}
-    <form method="post" action="{{global.basepath}}admin/save_slideshow">
+<div class="row">
+    <div class="col l12">
         <div class="row">
-            <div class="col l4">
-                Image URL
-            </div>
-            <div class="col l3">
-                Caption
-            </div>
-            <div class="col l3">
-                Target Link
-            </div>
-            <div class="col l1">
-                &nbsp;
-            </div>
-            <div class="col l1">
-                &nbsp;
+            <div class="col l12">
+                <a class="btn" href="{{global.basepath}}page/{{data.getSlug}}"><i class="fa fa-link" aria-hidden="true"></i></a>
+                <a class="btn" onclick="savePage()"><i class="fa fa-floppy-o" aria-hidden="true"></i></a> &nbsp;<span
+                    id="saved_autosave" class="green-text"></span> <span id="saved_ts" class="green-text"></span>
             </div>
         </div>
-        <span id="slides_wrap">
-            {{#data.getSlideShow.getSlideArray}}
-                    {{> admin/slide_row}}
-            {{/data.getSlideShow.getSlideArray}}
-        </span>
-        <input type="hidden" name="page_id" value="{{data.getPageId}}">
-        <input type="hidden" name="slideshow_id" value="{{data.getSlideshowId}}">
-        <button type="submit" class="btn">Save</button> <a class="btn" onclick="newSlide()"><i class="fa fa-plus" aria-hidden="true"></i></a>
-    </form>
-    {{/data.getSlideshowId}}
-<br>
+        <div class="row">
+            <div class="col l12">
+                <form id="page_main_form" action="{{global.basepath}}admin/page/save/{{data.getPageId}}">
+                    <strong>Page Name</strong>
+                    <input class="block" name="title" title="Page Title" type="text" value="{{data.getTitle}}">
+                    <br>
+                    <strong>Slug</strong>
+                    <input class="block" name="slug" title="Page Slug" type="text" value="{{data.getSlug}}">
+                    <br>
+                    <input type="hidden" name="page_id" title="page_id" value="{{data.getPageId}}">
+                    <input type="hidden" name="type" title="type_id" value="{{data.getType}}">
+                </form>
+                <strong>Content</strong>
+                {{> editor/editor }}
+            </div>
+        </div>
+        <h4 class="section_header">Modal Configuration</h4>
+        <section class="admin">
+            <p class="bubble">
+                Pages can optionally have an automatic popup. Does not accept HTML.
+            </p>
+            <form id="modal_form">
+                <div class="row middle-xs">
+                    <div class="col l2">
+                        <strong>Show Modal</strong>
+                        <select name="show_modal" title="Show Modal">
+                            <option value="1" {{#data.getShowModal}}selected="selected"{{/data.getShowModal}}>Yes</option>
+                            <option value="0" {{^data.getShowModal}}selected="selected"{{/data.getShowModal}}>No</option>
+                        </select>
+                    </div>
+                    <div class="col l3">
+                        <strong>Modal Header</strong>
+                        <input name="modal_header" class="block" type="text" title="Modal Header" value="{{data.getModalHeader}}">
+                    </div>
+                    <div class="col l7">
+                        <strong>Modal Content</strong>
+                        <input name="modal_content" class="block" type="text" title="Modal Content" value="{{data.getModalContent}}">
+                    </div>
+                </div>
+            </form>
+        </section>
+        {{^data.getSlideShow}}
+            <a class="btn" href="{{global.basepath}}admin/add_slideshow/{{data.getPageId}}">Add Slideshow</a>
+        {{/data.getSlideShow}}
+
+        {{#data.getSlideshowId}}
+            <h4 class="section_header">Slideshow Configuration</h4>
+            <section class="admin">
+                <p class="bubble">Add the images you want to appear on this page's slider below. Don't forget to place %slideshow% in the
+                    above content where you want the slideshow to appear.</p>
+                <form method="post" action="{{global.basepath}}admin/save_slideshow">
+                    <div class="row">
+                        <div class="col l4">
+                            Image URL
+                        </div>
+                        <div class="col l3">
+                            Caption
+                        </div>
+                        <div class="col l3">
+                            Target Link
+                        </div>
+                        <div class="col l1">
+                            &nbsp;
+                        </div>
+                        <div class="col l1">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <span id="slides_wrap">
+                        {{#data.getSlideShow.getSlideArray}}
+                            {{> admin/slide_row}}
+                        {{/data.getSlideShow.getSlideArray}}
+                    </span>
+                    <input type="hidden" name="page_id" value="{{data.getPageId}}">
+                    <input type="hidden" name="slideshow_id" value="{{data.getSlideshowId}}">
+                    <button type="submit" class="btn">Save</button> <a class="btn" onclick="newSlide()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </form>
+            </section>
+        {{/data.getSlideshowId}}
+    </div>
+    <div class="col l4">
+        &nbsp;
+    </div>
+</div>
 </div>

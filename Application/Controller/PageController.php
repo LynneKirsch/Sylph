@@ -106,10 +106,14 @@ class PageController extends BaseController
     {
         $post_obj = json_decode($_POST['form']);
 
+        /* @var Page $page */
         $page = coalesce($this->model()->find($id), new Page());
         $page->setContent(filter_var($post_obj->html, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $page->setTitle($post_obj->title);
         $page->setSlug($post_obj->slug);
+        $page->setShowModal($post_obj->modal->show_modal);
+        $page->setModalContent($post_obj->modal->modal_content);
+        $page->setModalHeader($post_obj->modal->modal_header);
         $page->setDelta(json_encode($post_obj->delta->ops));
         $this->write($page);
         return new JsonResponse(["time" => date("g:i A")]);

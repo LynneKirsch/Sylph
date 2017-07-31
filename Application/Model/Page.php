@@ -29,6 +29,12 @@ class Page extends BaseModel
     private $date;
     /** @Column(type="text", nullable=true) */
     private $slideshow_id;
+    /** @Column(type="integer", nullable=true) */
+    private $show_modal;
+    /** @Column(type="text", nullable=true) */
+    private $modal_header;
+    /** @Column(type="text", nullable=true) */
+    private $modal_content;
 
     /**
      * @return mixed
@@ -157,6 +163,56 @@ class Page extends BaseModel
     {
         $this->slideshow_id = $slideshow_id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getShowModal()
+    {
+        return $this->show_modal;
+    }
+
+    /**
+     * @param mixed $show_modal
+     */
+    public function setShowModal($show_modal)
+    {
+        $this->show_modal = $show_modal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModalHeader()
+    {
+        return $this->modal_header;
+    }
+
+    /**
+     * @param mixed $modal_header
+     */
+    public function setModalHeader($modal_header)
+    {
+        $this->modal_header = $modal_header;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModalContent()
+    {
+        return $this->modal_content;
+    }
+
+    /**
+     * @param mixed $modal_content
+     */
+    public function setModalContent($modal_content)
+    {
+        $this->modal_content = $modal_content;
+    }
+
+
 
     public function getFormattedDate()
     {

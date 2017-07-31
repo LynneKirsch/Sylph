@@ -5,3 +5,13 @@
         </div>
     </div>
 </div>
+{{#data.getShowModal}}
+    <!-- Modal Structure -->
+    <div id="modal_page_{{data.getPageId}}" class="modal">
+        <div class="modal-content">
+            <h4>{{data.getModalHeader}}</h4>
+            <p>{{data.getModalContent}}</p>
+        </div>
+    </div>
+{{/data.getShowModal}}
+<input type="hidden" id="page_id" value="{{data.getPageId}}">
