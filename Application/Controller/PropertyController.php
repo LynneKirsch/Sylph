@@ -99,6 +99,8 @@ class PropertyController extends BaseController
 
     public function index()
     {
-
+        $find_array = [];
+        $properties = $this->model()->findBy($find_array);
+        $this->view("properties", ["properties" => $properties]);
     }
 }
