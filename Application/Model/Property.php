@@ -45,6 +45,20 @@ class Property extends BaseModel
         $this->active = 0;
     }
 
+    public function getFormattedDate()
+    {
+        // dates are YYYYMMDD | Ymd
+        $year = substr($this->available, 0, 4);
+        $month = substr($this->available, 4, 2);
+        $day = substr($this->available, 6, 2);
+
+        return [
+            "month" => $month,
+            "day" => $day,
+            "year" => $year
+        ];
+    }
+
     public function getGalleryArray()
     {
         return json_decode($this->gallery);

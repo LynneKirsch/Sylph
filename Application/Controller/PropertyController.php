@@ -6,6 +6,7 @@ use Application\Core\BaseController;
 use Application\Model\Property;
 use Application\Model\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PropertyController extends BaseController
@@ -97,10 +98,34 @@ class PropertyController extends BaseController
         }
     }
 
+    public function searchProperties()
+    {
+        $query = [];
+        $beds = $this->post()->get("beds");
+        $baths = $this->post()->get("baths");
+        $half = $this->post()->get("half");
+
+        if($beds && $beds != 'all') {
+            $query['beds'] = $beds;
+        }
+
+        if($baths && $baths != 'all') {
+            $query['baths'] = $baths;
+        }
+
+        if($half && $half != 'all') {
+            $query['half'] = $half;
+        }
+
+        $data['data']['properties'] = $this->model()->findBy($query);
+        $view = $this->app()->getM()->render("partials/property-lst", $data);
+
+        return new JsonResponse(["properties" => $view]);
+    }
+
     public function index()
     {
-        $find_array = [];
-        $properties = $this->model()->findBy($find_array);
+        $properties = $this->model()->findAll();
         $this->view("properties", ["properties" => $properties]);
     }
 }
